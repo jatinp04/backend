@@ -17,7 +17,6 @@ const notemodel = require("./notemodel");
 
 const cors = require("cors");
 
-
 const port = process.env.BACKEND_PORT; //Backend Port Running on 5001
 const secretKey = process.env.JWT_SECRET;
 
@@ -39,7 +38,7 @@ MongoDB.start(); //To Start MongoDB service
 
 // app.use(allowCrossDomain);
 
-app.get("api/v1/notes", (req, res) => {
+app.get("/notes", (req, res) => {
   let notes = res.json({
     results: db.notes,
   });
@@ -47,7 +46,7 @@ app.get("api/v1/notes", (req, res) => {
 
 //auto , series and parallel async functions
 
-app.get("/newnotes",(req, res) => {
+app.get("/api/v1/newnotes", (req, res) => {
   async.auto(
     {
       notes: function (cb) {
@@ -69,7 +68,7 @@ app.get("/newnotes",(req, res) => {
   );
 });
 
-app.post("api/v1/addnewnote", (req, res) => {
+app.post("/api/v1/addnewnote", (req, res) => {
   let Existingnotes = db.notes;
   let note = req.body.note;
 
@@ -80,7 +79,7 @@ app.post("api/v1/addnewnote", (req, res) => {
 });
 
 //Post Request MongoDB
-app.post("api/v1/newnotes", async (req, res) => {
+app.post("/api/v1/newnotes", async (req, res) => {
   const data = new notemodel({
     description: req.body.description,
     title: req.body.title,
@@ -93,7 +92,7 @@ app.post("api/v1/newnotes", async (req, res) => {
 
 //fetch and add the notes and Users from the DB
 
-app.get("api/v1/concat", (req, res) => {
+app.get("/api/v1/concat", (req, res) => {
   async.auto(
     {
       notes: function (cb) {
@@ -134,7 +133,7 @@ app.delete('/delete',()=>{
 */
 
 //GET request to get users
-app.get("api/v1/getUsers", (req, res) => {
+app.get("/api/v1/getUsers", (req, res) => {
   async.auto(
     {
       users: function (cb) {
@@ -157,7 +156,7 @@ app.get("api/v1/getUsers", (req, res) => {
 });
 
 //Post API to Add new User
-app.post("api/v1/signup", (req, res) => {
+app.post("/api/v1/signup", (req, res) => {
   async.auto(
     {
       users: function (cb) {
@@ -186,7 +185,7 @@ app.post("api/v1/signup", (req, res) => {
 
 //POST Request For Login
 
-app.post("api/v1/login", (req, res) => {
+app.post("/api/v1/login", (req, res) => {
   async.auto(
     {
       users: function (cb) {
@@ -231,7 +230,7 @@ app.post("api/v1/login", (req, res) => {
 });
 
 //GET API for Logout
-app.get("api/v1/logout", (req, res) => {
+app.get("/api/v1/logout", (req, res) => {
   res
     .cookie("authToken", null, {
       httpOnly: true,
@@ -252,7 +251,7 @@ square of two numbers
 square toot of a number
  */
 
-app.post("api/v1/submission", (req, res) => {
+app.post("/api/v1/submission", (req, res) => {
   var key = req.body.key;
   var first = parseInt(req.body.firstNumber);
   var second = parseInt(req.body.secondNumber);
