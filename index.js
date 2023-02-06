@@ -46,7 +46,7 @@ app.get("/notes", (req, res) => {
 
 //auto , series and parallel async functions
 
-app.get("/api/v1/newnotes", (req, res) => {
+app.get("/api/v1/newnotes", verify,(req, res) => {
   async.auto(
     {
       notes: function (cb) {
@@ -221,7 +221,7 @@ app.post("/api/v1/login", (req, res) => {
       res
         .cookie("authToken", results.users, {
           httpOnly: false,
-          domain: "localhost",
+          domain: "notesfrontend.onrender.com/",
           expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
         })
         .send(" succesfully logged in");
