@@ -46,7 +46,7 @@ app.get("/notes", (req, res) => {
 
 //auto , series and parallel async functions
 
-app.get("/api/v1/newnotes", verify,(req, res) => {
+app.get("/api/v1/newnotes",(req, res) => {
   async.auto(
     {
       notes: function (cb) {
